@@ -8,9 +8,7 @@ import time
 import sys
 import argparse
 import getpass
-import os.path
-
-
+import os
 #------------------------Parsing arguments
 
 parser = argparse.ArgumentParser()
@@ -21,6 +19,7 @@ parser.add_argument('-e','--email_address', action="store", dest="address", help
 parser.add_argument('-d','--destination_user', action="store", dest="destination", help="The user ID of the person you want to send gifs to")
 parser.add_argument('-a','--add_gif', action="store", dest="more_gif", help="Gifs you want to add")
 parser.add_argument('-m','--message', action="store", dest="message", help="The message you want to send with the gif")
+parser.add_argument('-n','--new_gif_list', action="store_true", dest="new_list", help="Use this switch if you don't want to use the pre-registered gif list")
 
 
 args = parser.parse_args()
@@ -35,12 +34,33 @@ for i in more_gif:
         os._exit(0)  #I know it's bad practice but I thought it would be more usefriendly rather than raise an exception which might be harder to go through
         #raise ValueError("The url address for a gif must end with a \'.gif\'")
 
+if args.new_list:
+    gifs = []
+else:
+    gifs= ["https://media.tenor.co/images/564eac526a8af795c90ce5985904096e/tenor.gif",
+       "https://media.tenor.co/images/5d5565fe47af258d83b4caa2a668ccfa/tenor.gif",
+       "https://media.tenor.co/images/c3759877cdcb86e25a1d305d5ac6fe4d/tenor.gif",
+       "https://media.tenor.co/images/56ea2b419cd997350fb2d03c11ac724b/tenor.gif",
+       "https://media3.giphy.com/media/f6y4qvdxwEDx6/200_d.gif",
+       "https://media.tenor.co/images/23e82dfb8dbe7ef24e9dc8b2412411db/tenor.gif",
+       "https://media.tenor.co/images/f6f20cda181ac07db50be80cdc4fa0c8/tenor.gif",
+       "https://media.tenor.co/images/7daf1a191e6afe50c3ecf1ff446f1d4f/tenor.gif",
+       "https://media.tenor.co/images/98764169e6a3003fc1fcf1feba434724/tenor.gif",
+       "https://media.tenor.co/images/cd6f8d04b7d0e05f2d2b8ee5457cc4ee/tenor.gif",
+       "https://media.tenor.co/images/77d90206206963c6aa5b05a2aa5c8c06/tenor.gif",
+       "https://media.tenor.co/images/9c4a6d3cb294d01177a5b1e1544a5b9b/tenor.gif"]
+
+for i in more_gif:
+    gifs.append(i)
+
 while not args.address:
     args.address = input("Please enter your email adress:")
 
 while not args.password:
-    sys.stdout.write("Please enter your password:")
-    args.password = getpass.getpass()
+    if any('SPYDER' in name for name in os.environ) or "pythonw.exe" in sys.executable:
+        password = input("Please enter your password: ")
+    else:        
+        password = getpass.getpass("Please enter your password: ")
 
 
 
@@ -97,24 +117,6 @@ time_start_hour = int(args.start_time.split(':')[0])
 time_start_min = int(args.start_time.split(':')[1])
 time_stop_hour = int(args.stop_time.split(':')[0])
 time_stop_min = int(args.stop_time.split(':')[1])
-
-#-------------------------------------create gif database
-
-gifs= ["https://media.tenor.co/images/564eac526a8af795c90ce5985904096e/tenor.gif",
-       "https://media.tenor.co/images/5d5565fe47af258d83b4caa2a668ccfa/tenor.gif",
-       "https://media.tenor.co/images/c3759877cdcb86e25a1d305d5ac6fe4d/tenor.gif",
-       "https://media.tenor.co/images/56ea2b419cd997350fb2d03c11ac724b/tenor.gif",
-       "https://media3.giphy.com/media/f6y4qvdxwEDx6/200_d.gif",
-       "https://media.tenor.co/images/23e82dfb8dbe7ef24e9dc8b2412411db/tenor.gif",
-       "https://media.tenor.co/images/f6f20cda181ac07db50be80cdc4fa0c8/tenor.gif",
-       "https://media.tenor.co/images/7daf1a191e6afe50c3ecf1ff446f1d4f/tenor.gif",
-       "https://media.tenor.co/images/98764169e6a3003fc1fcf1feba434724/tenor.gif",
-       "https://media.tenor.co/images/cd6f8d04b7d0e05f2d2b8ee5457cc4ee/tenor.gif",
-       "https://media.tenor.co/images/77d90206206963c6aa5b05a2aa5c8c06/tenor.gif",
-       "https://media.tenor.co/images/9c4a6d3cb294d01177a5b1e1544a5b9b/tenor.gif"]
-
-for i in more_gif:
-    gifs.append(i)
 
 #-----------------------------------------------
 
