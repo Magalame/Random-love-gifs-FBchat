@@ -9,6 +9,11 @@ import sys
 import argparse
 import getpass
 import os
+#------------------------checks for version
+
+if int(fbchat.__version__.split('.')[1]) <1:
+    raise Exception('The version of the fbchat library is too old. This program requires version 1.1.1 at least.')
+
 #------------------------Parsing arguments
 
 parser = argparse.ArgumentParser()
@@ -58,9 +63,9 @@ while not args.address:
 
 while not args.password:
     if any('SPYDER' in name for name in os.environ) or "pythonw.exe" in sys.executable:
-        password = input("Please enter your password: ")
-    else:        
-        password = getpass.getpass("Please enter your password: ")
+        args.password = input("Please enter your password: ")
+    else:
+        args.password = getpass.getpass("Please enter your password: ")
 
 
 
@@ -77,8 +82,6 @@ except FBchatUserError:
 choice = ""
 while choice != "y" and choice != "n":
     choice = input("Do you want to print your friends list, with their ID? (Press \'y\' if you're not sure) [y/n]:")
-    #print(repr(choice))
-    #assert choice == "y"
 
 if choice.lower() == "y":
     def getKey(user):
@@ -104,13 +107,12 @@ while not args.destination:
     args.destination = input("Please enter the user ID of the person you want to send gifs to:")
 
 while not args.start_time:
-    args.start_time = input("Please specify at what hour should the program start being active (in a 24h format, like \'13:00\'):")
+    args.start_time = input("Please specify at what hour should the program\033[92m start\033[00m being active (in a 24h format, like \'13:00\'):")
 
 while not args.stop_time:
-    args.stop_time = input("Please specify at what hour should the program stop being active:")
+    args.stop_time = input("Please specify at what hour should the program\033[91m stop\033[00m being active:")
 
-while not args.message:
-    args.message = input("If you want to attach a message with your gif, please write it:")
+args.message = input("If you want to attach a message with your gif, please write it:")
 
 
 time_start_hour = int(args.start_time.split(':')[0])
@@ -150,8 +152,6 @@ while True:
             delais = random.randrange(3600*2,3600*3)
 
 
-            #printf("Dors pendant " + str(delais) + "secondes")
-
         else:
             delais = random.randrange(0,3600*1)
             printf("\033[91m{}\033[00m".format("Last message sent less than an hour ago"))
@@ -159,7 +159,7 @@ while True:
 
     else:
         delais = random.randrange(3600*3,3600*5)
-        printf("\033[91m{}\033[00m".format("Time doesn't fall in the active period"))
+        printf("\033[91m{}\033[00m".format("Time doesn't fall in the active period, we'll just wait until it does"))
 
 
     printf("Sleeping during " + str(delais) + " seconds")
