@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from fbchat import Client
+from fbchat import Client, __version__
 from fbchat.models import *
 import datetime
 import random
@@ -10,9 +10,9 @@ import argparse
 import getpass
 import os
 #------------------------checks for version
-
-if int(fbchat.__version__.split('.')[1]) <1:
-    raise Exception('The version of the fbchat library is too old. This program requires version 1.1.1 at least.')
+if int(__version__.split('.')[0]) <= 1:
+    if int(__version__.split('.')[1]) <1:
+        raise Exception('The version of the fbchat library is too old. This program requires version 1.1.1 at least.')
 
 #------------------------Parsing arguments
 
@@ -25,9 +25,12 @@ parser.add_argument('-d','--destination_user', action="store", dest="destination
 parser.add_argument('-a','--add_gif', action="store", dest="more_gif", help="Gifs you want to add")
 parser.add_argument('-m','--message', action="store", dest="message", help="The message you want to send with the gif")
 parser.add_argument('-n','--new_gif_list', action="store_true", dest="new_list", help="Use this switch if you don't want to use the pre-registered gif list")
-
+parser.add_argument('-D','--delay', action="store",dest="delay",help="Determines the delay between each verification")
 
 args = parser.parse_args()
+
+
+#------------------------Writes gif database
 
 more_gif = []
 if args.more_gif:
@@ -41,7 +44,7 @@ for i in more_gif:
 
 if args.new_list:
     gifs = []
-else:
+else: #default gif list
     gifs= ["https://media.tenor.co/images/564eac526a8af795c90ce5985904096e/tenor.gif",
        "https://media.tenor.co/images/5d5565fe47af258d83b4caa2a668ccfa/tenor.gif",
        "https://media.tenor.co/images/c3759877cdcb86e25a1d305d5ac6fe4d/tenor.gif",
@@ -89,7 +92,8 @@ if choice.lower() == "y":
 
     users = client.fetchAllUsers()
     print("Name\t\t\t\t| ID")
-    for user in sorted(users,key=getKey):
+    for user in sorted(users,key=getKey): 
+	    #next lines are just for formatting 
         a=4
         if len(user.name) > 6:
             a = 3
@@ -114,6 +118,7 @@ while not args.stop_time:
 
 args.message = input("If you want to attach a message with your gif, please write it:")
 
+#parsing start/stop time
 
 time_start_hour = int(args.start_time.split(':')[0])
 time_start_min = int(args.start_time.split(':')[1])
@@ -121,46 +126,37 @@ time_stop_hour = int(args.stop_time.split(':')[0])
 time_stop_min = int(args.stop_time.split(':')[1])
 
 #-----------------------------------------------
-
+#just a useful function to print while using infinite while loops
 def printf(text):
     sys.stdout.write(str(text)+"\n")
     sys.stdout.flush()
 
 while True:
     printf("---------------------------New loop---------------------------")
-    messages = client.fetchThreadMessages(thread_id=args.destination, limit=50)
+    messages = client.fetchThreadMessages(thread_id=args.destination, limit=200) #fetches until 200 messages, just to be sure 
     for message in messages:
-        if message.author == client.uid:
+        if message.author == client.uid: #we automatically get the last message sent
             del messages
             break
 
-    time_last_message = datetime.datetime.fromtimestamp(int(message.timestamp[:-3]))
+    time_last_message = datetime.datetime.fromtimestamp(int(message.timestamp[:-3])) #converts the timestamp that the fbchat library returns, we chop off the last three digits because they're not recognize by the python function
     time_now = datetime.datetime.now()
 
-    printf("Last message: \"" + message.text + "\" @ " + str(time_last_message))
+	# display info
+    printf("Last message: \"" + message.text + "\" @ " + str(time_last_message)) 
     printf("Current time: " + str(time_now.time()))
     printf("Difference: " + str((time_now-time_last_message).seconds) + " seconds")
 
-    if time_now.time() > datetime.time(time_start_hour, time_start_min) and time_now.time() < datetime.time(time_stop_hour, time_stop_min):
+    if time_now.time() > datetime.time(time_start_hour, time_start_min) and time_now.time() < datetime.time(time_stop_hour, time_stop_min): #if we're in the time range allowed
 
-        if (time_now-time_last_message).seconds > 3600:
-            index=random.randrange(0,len(gifs))
-            printf("\033[92m{}" + str(index) +"\033[00m".format("Sending image \#"))
-            client.sendRemoteImage(gifs[index], message=Message(text=args.message), thread_id=args.destination, thread_type=ThreadType.USER)
-            printf("\033[92m{}\033[00m".format("Image sent"))
-
-            delais = random.randrange(3600*2,3600*3)
-
+        if (time_now-time_last_message).seconds > args.delay: #if the last message is more than the defined delay, then we 
+            index=random.randrange(0,len(gifs)) # choose a random gif
+            printf("\033[92m{}" + str(index) +"\033[00m".format("Sending image \#")) #print info about the gifs
+            client.sendRemoteImage(gifs[index], message=Message(text=args.message), thread_id=args.destination, thread_type=ThreadType.USER) #send it
+            printf("\033[92m{}\033[00m".format("Image sent")) #print confirmation
 
         else:
-            delais = random.randrange(0,3600*1)
-            printf("\033[91m{}\033[00m".format("Last message sent less than an hour ago"))
-
-
-    else:
-        delais = random.randrange(3600*3,3600*5)
-        printf("\033[91m{}\033[00m".format("Time doesn't fall in the active period, we'll just wait until it does"))
-
-
+            printf("\033[91m{}\033[00m".format("Last message sent less than an hour ago")) #else print why it didn't send
+    delais = args.delay
     printf("Sleeping during " + str(delais) + " seconds")
     time.sleep(delais)
