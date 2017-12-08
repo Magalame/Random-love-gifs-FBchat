@@ -116,6 +116,9 @@ while not args.start_time:
 while not args.stop_time:
     args.stop_time = input("Please specify at what hour should the program\033[91m stop\033[00m being active:")
 
+while not args.delay:
+    args.delay = input("Please specify what should be the delay in seconds between two checks:")
+args.delay = int(args.delay)
 args.message = input("If you want to attach a message with your gif, please write it:")
 
 #parsing start/stop time
@@ -156,7 +159,7 @@ while True:
             printf("\033[92m{}\033[00m".format("Image sent")) #print confirmation
 
         else:
-            printf("\033[91m{}\033[00m".format("Last message sent less than an hour ago")) #else print why it didn't send
+            printf("\033[91m{}\033[00m".format("Last message sent less than " + str(args.delay) + "s ago")) #else print why it didn't send
     delais = args.delay
     printf("Sleeping during " + str(delais) + " seconds")
     time.sleep(delais)
