@@ -41,7 +41,7 @@ Right after you'll have to type the ID we just talked about, just copy paste it.
 Afterwards you'll be asked for the active period of the program: it will only be allowed to send gifs between a certain bracket, like from 9am to 10pm. 
 Please use the 24h format, or you might get a weird result.
 
-You will also have to specify the delay we talked about at the beginning: if you write 3600, then the program will check each hour if a message was sent the last hour. 
+You will also have to specify the delay we talked about at the beginning. We use a slightly different format here: "hh:mm:ss". For example, if you type "1:2:3" then the progam will check all 1 hour 2 minutes 3 secondes. Although if you type "1:20:3", the program will check every 1 hour **20** minutes 3 seconds. 
 
 And eventually, you can type a little message you want to attach to the gif that will be sent!
 
