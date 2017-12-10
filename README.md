@@ -2,7 +2,7 @@
 
 This is a small program that check every X seconds (or minutes or hours) if you sent a message to the person you like on Facebook. 
 More exactly, if no message was sent in that interval X, then the program will send a random gif. 
-You can add your own gifs to the predefined list, or completely wipe it and only put yours.
+You can add your own gifs to the predefined list (see the Misc section), or completely wipe it and only put yours.
 
 ## Requirements
 
@@ -19,12 +19,23 @@ then launch it:
 
 `python3 random_love_gifs.py`
 
-You will first be asked about your email, the one you use for Facebook, then about your password. 
+if you do not want to use the preloaded gif list, type
+
+`python3 random_love_gifs.py -n`
+
+you can then add your own this way:
+
+`python3 random_love_gifs.py -n -a url1.gif,url2.gif,url3.gif`
+
+you can indeed add gifs without erasing the preloaded list:
+
+`python3 random_love_gifs.py -a url1.gif,url2.gif,url3.gif`
+
+After it is launched, you will first be asked about your email, the one you use for Facebook, then about your password. 
 
 Then the program will ask you if you want to see your friend list printed. If it is the first time you use it please press yes, 
 as next to each name will be printed an ID number, and you will need that number: that it the way the program recognize who you want to send gifs to, 
 it is much more pratical than dealing with names because of space, accents, homonyms, etc.
-
 Right after you'll have to type the ID we just talked about, just copy paste it. 
 
 Afterwards you'll be asked for the active period of the program: it will only be allowed to send gifs between a certain bracket, like from 9am to 10pm. 
