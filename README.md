@@ -22,7 +22,7 @@ then launch it:
 You will first be asked about your email, the one you use for Facebook, then about your password. 
 
 Then the program will ask you if you want to see your friend list printed. If it is the first time you use it please press yes, 
-as next to each name will be printed an ID number, and you will need that number: that it the way the program recognize you want to send gifs too, 
+as next to each name will be printed an ID number, and you will need that number: that it the way the program recognize who you want to send gifs to, 
 it is much more pratical than dealing with names because of space, accents, homonyms, etc.
 
 Right after you'll have to type the ID we just talked about, just copy paste it. 
