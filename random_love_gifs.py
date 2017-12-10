@@ -27,6 +27,7 @@ parser.add_argument('-m','--message', action="store", dest="message", help="The 
 parser.add_argument('-n','--new_gif_list', action="store_true", dest="new_list", help="Use this switch if you don't want to use the pre-registered gif list")
 parser.add_argument('-D','--delay', action="store",dest="delay",help="Determines the delay between each verification")
 parser.add_argument('-A','--add_from_prompt', action="store_true", dest="prompt", help="Use this switch if you want to be prompted what gifs you want to add")
+parser.add_argument('-f','--file', action="store",dest="file",help="Input file for gif list")
 
 
 args = parser.parse_args()
@@ -43,6 +44,19 @@ if args.more_gif:
             print("The url address for a gif you add must end with a \'.gif\', so \'" + i + "\' will not be added")
         else:
             more_gif.append(i)
+			
+if args.file:
+    try:
+        file = open(args.file, "rt",newline='')
+    except Exception as e:
+        raise e
+    for i in file.read().splitlines():
+#        print(i)
+        if i.split('.')[-1] != "gif":
+            print("The url address for a gif you add must end with a \'.gif\', so \'" + i + "\' from file \'" + args.file + "\' will not be added")
+        else:
+            more_gif.append(i)  
+	 
 
 if args.prompt:
     print("Please type the links of the gifs you want to add, one by one (enter one, then press Enter, then another one etc).\nType \"end\" when you're done.")
@@ -129,13 +143,13 @@ while not args.destination:
     args.destination = input("Please enter the user ID of the person you want to send gifs to:")
 
 while not args.start_time:
-    args.start_time = input("Please specify at what hour should the program\033[92m start\033[00m being active (in a 24h format, like \'13:00\'):")
+    args.start_time = input("Please specify at what hour should the program\033[92m start\033[00m being active (in a 24h format, like \'13:00\') >")
 
 while not args.stop_time:
-    args.stop_time = input("Please specify at what hour should the program\033[91m stop\033[00m being active:")
+    args.stop_time = input("Please specify at what hour should the program\033[91m stop\033[00m being active >")
 
 while not args.delay:
-    args.delay = input("Please specify what should be the delay between two checks:")
+    args.delay = input("Please specify what should be the delay between two checks with the format hh:mm:ss >")
 
 args.message = input("If you want to attach a message with your gif, please write it:")
 
