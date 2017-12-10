@@ -31,6 +31,12 @@ you can indeed add gifs without erasing the preloaded list:
 
 `python3 random_love_gifs.py -a url1.gif,url2.gif,url3.gif`
 
+if you'd rather do it by typing the links one by one, in a more user-friendly fashion you can go for:
+
+`python3 random_love_gifs.py -A`
+
+and then type them
+
 After it is launched, you will first be asked about your email, the one you use for Facebook, then about your password. 
 
 Then the program will ask you if you want to see your friend list printed. If it is the first time you use it please press yes, 
