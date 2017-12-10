@@ -82,4 +82,4 @@ https://media.tenor.co/images/9c4a6d3cb294d01177a5b1e1544a5b9b/tenor.gif
 ## Todo:
 * ~allow to specify the delay in hours/minutes rather than seconds~
 * ~allow to type in the gifs one can add instead of relying solely on command line arguments~
-* add the possibility to use a file as input for gif list
+* ~add the possibility to use a file as input for gif list~
