@@ -1,4 +1,4 @@
-# Random-love-gifs-FBchat
+# Random love gifs
 
 This is a small program that check every X seconds (or minutes or hours) if you sent a message to the person you like on Facebook. 
 More exactly, if no message was sent in that interval X, then the program will send a random gif. 
