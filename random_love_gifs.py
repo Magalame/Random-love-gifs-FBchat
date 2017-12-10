@@ -26,6 +26,8 @@ parser.add_argument('-a','--add_gif', action="store", dest="more_gif", help="Gif
 parser.add_argument('-m','--message', action="store", dest="message", help="The message you want to send with the gif")
 parser.add_argument('-n','--new_gif_list', action="store_true", dest="new_list", help="Use this switch if you don't want to use the pre-registered gif list")
 parser.add_argument('-D','--delay', action="store",dest="delay",help="Determines the delay between each verification")
+parser.add_argument('-A','--add_from_prompt', action="store_true", dest="prompt", help="Use this switch if you want to be prompted what gifs you want to add")
+
 
 args = parser.parse_args()
 
@@ -33,14 +35,28 @@ args = parser.parse_args()
 #------------------------Writes gif database
 
 more_gif = []
-if args.more_gif:
-    more_gif = args.more_gif.split(',')
 
-for i in more_gif:
-    if more_gif.split('.')[-1] != "gif":
-        print("The url address for a gif you add must end with a \'.gif\'")
-        os._exit(0)  #I know it's bad practice but I thought it would be more usefriendly rather than raise an exception which might be harder to go through
-        #raise ValueError("The url address for a gif must end with a \'.gif\'")
+if args.more_gif:
+    for i in args.more_gif.split(','):
+#        print("i:",i)
+        if i.split('.')[-1] != "gif":
+            print("The url address for a gif you add must end with a \'.gif\', so \'" + i + "\' will not be added")
+        else:
+            more_gif.append(i)
+
+if args.prompt:
+    print("Please type the links of the gifs you want to add, one by one (enter one, then press Enter, then another one etc).\nType \"end\" when you're done.")
+    link = ""
+    while True:
+        link = input(">")
+        if link == "end":
+            break
+        if link.split('.')[-1] != "gif":
+            print("The url address for a gif you add must end with a \'.gif\', so \'" + link + "\' will not be added")
+        else:
+            more_gif.append(link)
+
+#print(more_gif)
 
 if args.new_list:
     gifs = []
@@ -60,6 +76,8 @@ else: #default gif list
 
 for i in more_gif:
     gifs.append(i)
+
+#print(gifs)
 
 while not args.address:
     args.address = input("Please enter your email adress:")
@@ -117,8 +135,8 @@ while not args.stop_time:
     args.stop_time = input("Please specify at what hour should the program\033[91m stop\033[00m being active:")
 
 while not args.delay:
-    args.delay = input("Please specify what should be the delay in seconds between two checks:")
-args.delay = int(args.delay)
+    args.delay = input("Please specify what should be the delay between two checks:")
+
 args.message = input("If you want to attach a message with your gif, please write it:")
 
 #parsing start/stop time
@@ -128,6 +146,12 @@ time_start_min = int(args.start_time.split(':')[1])
 time_stop_hour = int(args.stop_time.split(':')[0])
 time_stop_min = int(args.stop_time.split(':')[1])
 
+delay_hour = int(args.delay.split(':')[0])
+delay_min = int(args.delay.split(':')[1])
+delay_sec = int(args.delay.split(':')[2])
+
+#base = datetime.time(0,0)
+delais = datetime.timedelta(hours=delay_hour, minutes=delay_min, seconds=delay_sec).seconds
 #-----------------------------------------------
 #just a useful function to print while using infinite while loops
 def printf(text):
@@ -152,14 +176,14 @@ while True:
 
     if time_now.time() > datetime.time(time_start_hour, time_start_min) and time_now.time() < datetime.time(time_stop_hour, time_stop_min): #if we're in the time range allowed
 
-        if (time_now-time_last_message).seconds > args.delay: #if the last message is more than the defined delay, then we 
-            index=random.randrange(0,len(gifs)) # choose a random gif
-            printf("\033[92m{}" + str(index) +"\033[00m".format("Sending image \#")) #print info about the gifs
+        if (time_now-time_last_message).seconds > delais: #if the last message is more than the defined delay, then we 
+            index=random.randint(0,len(gifs)-1) # choose a random gif
+            printf("\033[92m{}".format("Sending image #") + str(index) +"\033[00m") #print info about the gifs
             client.sendRemoteImage(gifs[index], message=Message(text=args.message), thread_id=args.destination, thread_type=ThreadType.USER) #send it
             printf("\033[92m{}\033[00m".format("Image sent")) #print confirmation
 
         else:
-            printf("\033[91m{}\033[00m".format("Last message sent less than " + str(args.delay) + "s ago")) #else print why it didn't send
-    delais = args.delay
+            printf("\033[91m{}\033[00m".format("Last message sent less than the specified delay")) #else print why it didn't send
+
     printf("Sleeping during " + str(delais) + " seconds")
     time.sleep(delais)
