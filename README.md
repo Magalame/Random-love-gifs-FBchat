@@ -23,21 +23,31 @@ if you do not want to use the preloaded gif list, type
 
 `python3 random_love_gifs.py -n`
 
-you can then add your own this way:
+you could also add your own this way:
 
 `python3 random_love_gifs.py -n -a url1.gif,url2.gif,url3.gif`
 
-you can indeed add gifs without erasing the preloaded list:
+you could indeed add gifs without erasing the preloaded list:
 
 `python3 random_love_gifs.py -a url1.gif,url2.gif,url3.gif`
 
-if you'd rather do it by typing the links one by one, in a more user-friendly fashion you can go for:
+if you'd rather do it by typing the links one by one, in a more user-friendly fashion you could go for:
 
 `python3 random_love_gifs.py -A`
 
 and then type them
 
-After it is launched, you will first be asked about your email, the one you use for Facebook, then about your password. 
+if you have a text file with the format 
+`url.gif`
+`url2.gif`
+`url3.gif`
+
+then you could use it as input by typing
+
+`python3 random_love_gifs.py -f filename`
+
+
+After the program is launched, you will first be asked about your email, the one you use for Facebook, then about your password. 
 
 Then the program will ask you if you want to see your friend list printed. If it is the first time you use it please press yes, 
 as next to each name will be printed an ID number, and you will need that number: that it the way the program recognize who you want to send gifs to, 
