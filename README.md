@@ -15,29 +15,32 @@ First download the script:
 
 `wget https://raw.githubusercontent.com/Magalame/Random-love-gifs-FBchat/master/random_love_gifs.py`
 
-then launch it:
+then launch it, for that you have several option:
+
+- the standard way:
 
 `python3 random_love_gifs.py`
 
-if you do not want to use the preloaded gif list, type
+- if you do not want to use the preloaded gif list, type
 
 `python3 random_love_gifs.py -n`
 
-you could also add your own this way:
+- you could also add your own this way:
 
 `python3 random_love_gifs.py -n -a url1.gif,url2.gif,url3.gif`
 
-you could indeed add gifs without erasing the preloaded list:
+- you could indeed add gifs without erasing the preloaded list:
 
 `python3 random_love_gifs.py -a url1.gif,url2.gif,url3.gif`
 
-if you'd rather do it by typing the links one by one, in a more user-friendly fashion you could go for:
+- if you'd rather do it by typing the links one by one, in a more user-friendly fashion you could go for:
 
 `python3 random_love_gifs.py -A`
 
 and then type them
 
-if you have a text file with the format 
+- if you have a text file with the format 
+
 `url.gif`
 `url2.gif`
 `url3.gif`
