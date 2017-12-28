@@ -115,7 +115,7 @@ except FBchatUserError:
     os._exit(0)
 
 choice = ""
-while choice != "y" and choice != "n":
+while choice.lower() != "y" and choice.lower() != "n":
     choice = input("Do you want to print your friends list, with their ID? (Press \'y\' if you're not sure) [y/n]:")
 
 if choice.lower() == "y":
