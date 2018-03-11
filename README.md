@@ -42,7 +42,9 @@ and then type them
 - if you have a text file with the format 
 
 `url.gif`
+
 `url2.gif`
+
 `url3.gif`
 
 then you could use it as input by typing
@@ -91,6 +93,26 @@ https://media.tenor.co/images/cd6f8d04b7d0e05f2d2b8ee5457cc4ee/tenor.gif
 https://media.tenor.co/images/77d90206206963c6aa5b05a2aa5c8c06/tenor.gif
 
 https://media.tenor.co/images/9c4a6d3cb294d01177a5b1e1544a5b9b/tenor.gif
+
+https://media.tenor.co/images/0f33bdaa5c425800765624282a7f4f16/tenor.gif
+
+https://media.tenor.co/images/fe8d18d710bfcea6ab01e59b7056716c/tenor.gif
+
+https://media.tenor.co/images/d6b57d4ce2b21b61cf494fbf4721a149/tenor.gif
+
+https://media.tenor.co/images/1d397e7690f2947a46a1a65a075ceae8/tenor.gif
+
+https://media.tenor.co/images/fced7415b284c36347037637a81c2cd6/tenor.gif
+
+https://media.tenor.co/images/98ec6d443d6a8b420e8564dcb009fbaa/tenor.gif
+
+https://media.tenor.co/images/0098a5aeb247ab5875cff39109218294/tenor.gif
+
+https://media.tenor.co/images/3abca7efae57819d20fd056c55407398/tenor.gif
+
+https://media.tenor.co/images/d2612ede953556132273ee54366d7436/tenor.gif
+
+https://media.tenor.co/images/3c5b3494a34cf070f9091785e544b33d/tenor.gif
 
 ## Todo:
 * ~allow to specify the delay in hours/minutes rather than seconds~
